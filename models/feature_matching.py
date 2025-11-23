@@ -14,6 +14,9 @@ class FeatureMatchingModule(nn.Module):
     Matches enhanced query and support features from SFEM
     """
     
+    # Small epsilon for numerical stability in division
+    EPSILON = 1e-5
+    
     def __init__(self, feature_dim=512, temperature=1.0):
         super(FeatureMatchingModule, self).__init__()
         
@@ -55,7 +58,9 @@ class FeatureMatchingModule(nn.Module):
         
         # Masked pooling
         masked_features = features * mask
-        pooled = masked_features.sum(dim=(2, 3), keepdim=True) / (mask.sum(dim=(2, 3), keepdim=True) + 1e-5)
+        pooled = masked_features.sum(dim=(2, 3), keepdim=True) / (
+            mask.sum(dim=(2, 3), keepdim=True) + self.EPSILON
+        )
         
         return pooled
     

@@ -18,7 +18,8 @@ class SegPPD101Dataset(Dataset):
     Supports meta-learning episodic training
     """
     
-    def __init__(self, root, split='train', img_size=512, n_way=1, k_shot=1):
+    def __init__(self, root, split='train', img_size=512, n_way=1, k_shot=1, 
+                 default_episode_length=1000):
         """
         Args:
             root: Root directory of SegPPD-101 dataset
@@ -26,12 +27,14 @@ class SegPPD101Dataset(Dataset):
             img_size: Image size for resizing
             n_way: Number of classes per episode (1 for binary segmentation)
             k_shot: Number of support examples per class
+            default_episode_length: Default number of episodes when dataset is not found
         """
         self.root = root
         self.split = split
         self.img_size = img_size
         self.n_way = n_way
         self.k_shot = k_shot
+        self.default_episode_length = default_episode_length
         
         # Define transforms
         self.img_transform = transforms.Compose([
@@ -106,7 +109,7 @@ class SegPPD101Dataset(Dataset):
         """
         Return number of classes (for episodic sampling)
         """
-        return len(self.data) if self.data else 1000  # Default to 1000 episodes
+        return len(self.data) if self.data else self.default_episode_length
     
     def __getitem__(self, idx):
         """

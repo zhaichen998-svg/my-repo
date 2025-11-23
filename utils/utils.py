@@ -64,7 +64,9 @@ def compute_iou(pred, target, num_classes=2):
         union = (pred_cls | target_cls).sum().float()
         
         if union == 0:
-            iou = 1.0  # If no ground truth, and prediction is also empty
+            # Both prediction and target are empty (no pixels of this class)
+            # Perfect match in this case, so return IoU of 1.0
+            iou = 1.0
         else:
             iou = intersection / union
         
