@@ -53,7 +53,6 @@ example_data/
 
 # Dataset
 dataset/
-data/
 
 # TensorBoard
 runs/
