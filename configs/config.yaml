@@ -1,0 +1,62 @@
+# FSS Network Configuration for Wild Plant Disease and Pest Segmentation
+
+model:
+  backbone: resnet50
+  pretrained: true
+  feature_extractor: pspnet
+  freeze_backbone: true
+  
+  # SFEM configuration
+  sfem:
+    use_acm: true
+    learnable_correction: true
+    correction_init: 1.0
+  
+  # Feature matching configuration
+  matching:
+    similarity_metric: cosine
+    temperature: 1.0
+  
+  # HPKIM configuration
+  hpkim:
+    use_prior_knowledge: true
+    combine_features: true
+    fusion_method: concat
+
+training:
+  # Meta-learning configuration
+  approach: meta_learning
+  episodes_per_epoch: 1000
+  n_way: 1  # binary segmentation (foreground/background)
+  k_shot: 1  # few-shot setting
+  
+  # Optimization
+  optimizer: adamw
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  momentum: 0.9
+  
+  # Training schedule
+  epochs: 150
+  batch_size: 4
+  num_workers: 4
+  
+  # Learning rate schedule
+  lr_scheduler: step
+  lr_decay_step: 50
+  lr_decay_gamma: 0.5
+
+dataset:
+  name: SegPPD-101
+  root: ./data/SegPPD-101
+  img_size: 512
+  split:
+    train: 0.7
+    val: 0.15
+    test: 0.15
+
+logging:
+  log_dir: ./logs
+  save_dir: ./checkpoints
+  log_interval: 10
+  save_interval: 10
