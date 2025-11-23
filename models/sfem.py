@@ -93,11 +93,8 @@ class SFEM(nn.Module):
         if self.use_acm:
             x = self.acm(x)
         
-        # Apply learnable correction coefficient
-        if self.learnable_correction:
-            x = x * self.correction_coeff
-        else:
-            x = x * self.correction_coeff
+        # Apply correction coefficient (learnable or fixed)
+        x = x * self.correction_coeff
         
         # Feature transformation
         x = self.conv1(x)
