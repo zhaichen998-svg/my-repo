@@ -29,7 +29,7 @@ def load_mask(mask_path, img_size=400):
     
     transform = transforms.Compose([
         transforms.Resize((img_size, img_size), 
-                        interpolation=transforms.InterpolationMode.NEAREST),
+                        interpolation=transforms.InterpolationMode.NEAREST),  # Use nearest for masks
         transforms.ToTensor()
     ])
     

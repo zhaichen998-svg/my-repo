@@ -146,11 +146,11 @@ class FeatureMatching(nn.Module):
         mask = F.interpolate(
             mask.unsqueeze(1).float(), 
             size=feat.shape[-2:], 
-            mode='bilinear', 
-            align_corners=True
+            mode='nearest',  # Use nearest for binary masks
+            align_corners=None
         )
         feat_masked = feat * mask
-        feat_avg = feat_masked.sum(dim=(2, 3)) / (mask.sum(dim=(2, 3)) + 1e-5)
+        feat_avg = feat_masked.sum(dim=(2, 3)) / (mask.sum(dim=(2, 3)) + 1e-8)  # Larger epsilon for stability
         return feat_avg
     
     def forward(self, query_feat, support_feat, support_mask):

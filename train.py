@@ -57,7 +57,7 @@ class FSSTrainer:
         )
         
         # Validation dataset (if available)
-        val_root = config.data_root.replace('train', 'val')
+        val_root = os.path.join(os.path.dirname(config.data_root), 'val')
         if os.path.exists(val_root):
             val_dataset = SegPPDDataset(
                 root_dir=val_root,

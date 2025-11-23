@@ -64,22 +64,22 @@ class FSSNetwork(nn.Module):
         support_mask_low = F.interpolate(
             support_mask.unsqueeze(1).float(), 
             size=query_feats['low'].shape[-2:],
-            mode='bilinear', 
-            align_corners=True
+            mode='nearest',
+            align_corners=None
         ).squeeze(1)
         
         support_mask_mid = F.interpolate(
             support_mask.unsqueeze(1).float(), 
             size=query_feats['mid'].shape[-2:],
-            mode='bilinear', 
-            align_corners=True
+            mode='nearest',
+            align_corners=None
         ).squeeze(1)
         
         support_mask_high = F.interpolate(
             support_mask.unsqueeze(1).float(), 
             size=query_feats['high'].shape[-2:],
-            mode='bilinear', 
-            align_corners=True
+            mode='nearest',
+            align_corners=None
         ).squeeze(1)
         
         # 2. SFEM - Support Feature Enhancement
