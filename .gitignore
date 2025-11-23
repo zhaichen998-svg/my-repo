@@ -48,6 +48,7 @@ logs/
 checkpoints/
 outputs/
 demo_output.png
+example_data/
 *.log
 
 # Dataset
